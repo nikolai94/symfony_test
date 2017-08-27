@@ -33,19 +33,6 @@
         <mkdir dir="${basedir}/app/build/phpdox"/>
     </target>
 
-    <target name="lint" description="Perform syntax check of sourcecode files">
-        <apply executable="php" >
-            <arg value="-l" />
-
-            <fileset dir="${basedir}/src">
-                <include name="**/*.php" />
-            </fileset>
-
-            <fileset dir="${basedir}/src/">
-                <include name="**/*Test.php" />
-            </fileset>
-        </apply>
-    </target>
 
     <target name="phploc" description="Measure project size using PHPLOC">
         <exec executable="phploc">
