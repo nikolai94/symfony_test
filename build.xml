@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="name-of-project" default="build">
-    <target name="build" depends="prepare,lint,phpcpd,phpdox,phpunit,phpcb"/>
+    <target name="build" depends="prepare,lint,phpdox,phpunit,phpcb"/>
 
     <target name="build-parallel" depends="prepare,lint,tools-parallel,phpunit,phpcb"/>
 
     <target name="tools-parallel" description="Run tools in parallel">
         <parallel threadCount="2">
-            <antcall target="phpcpd"/>
             <antcall target="phpdox"/>
         </parallel>
     </target>
@@ -40,14 +39,6 @@
                 <modified />
             </fileset>
         </apply>
-    </target>
-
-    <target name="phpcpd" description="Find duplicate code using PHPCPD">
-        <exec executable="phpcpd">
-            <arg value="--log-pmd" />
-            <arg value="${basedir}/app/build/logs/pmd-cpd.xml" />
-            <arg path="${basedir}/src" />
-        </exec>
     </target>
 
     <target name="phpdox" description="Generate API documentation using phpDox">
