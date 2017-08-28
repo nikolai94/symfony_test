@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="name-of-project" default="build">
-    <target name="build" depends="prepare,vendors,parameters,phploc,pdepend,phpmd-ci,phpcpd,phpdox,phpunit,phpcb"/>
+    <target name="build" depends="prepare,vendors,parameters,lint,phploc,pdepend,phpmd-ci,phpcpd,phpdox,phpunit,phpcb"/>
 
-    <target name="build-parallel" depends="prepare,tools-parallel,phpunit,phpcb"/>
+    <target name="build-parallel" depends="prepare,lint,tools-parallel,phpunit,phpcb"/>
 
     <target name="tools-parallel" description="Run tools in parallel">
         <parallel threadCount="2">
@@ -31,6 +31,22 @@
         <mkdir dir="${basedir}/app/build/logs"/>
         <mkdir dir="${basedir}/app/build/pdepend"/>
         <mkdir dir="${basedir}/app/build/phpdox"/>
+    </target>
+
+    <target name="lint" description="Perform syntax check of sourcecode files">
+        <apply executable="php" failonerror="true">
+            <arg value="-l" />
+
+            <fileset dir="${basedir}/src">
+                <include name="**/*.php" />
+                <modified />
+            </fileset>
+
+            <fileset dir="${basedir}/src/">
+                <include name="**/*Test.php" />
+                <modified />
+            </fileset>
+        </apply>
     </target>
 
     <target name="phploc" description="Measure project size using PHPLOC">
@@ -84,7 +100,7 @@
     </target>
 
     <target name="phpunit" description="Run unit tests with PHPUnit">
-        <exec executable="phpunit" >
+        <exec executable="phpunit" failonerror="true">
             <arg value="-c" />
             <arg path="${basedir}/app/phpunit.xml" />
         </exec>
@@ -102,13 +118,13 @@
     </target>
 
     <target name="vendors" description="Update vendors">
-        <exec executable="${basedir}/bin/vendors" >
+        <exec executable="${basedir}/bin/vendors" failonerror="true">
             <arg value="update" />
         </exec>
     </target>
 
     <target name="parameters" description="Copy parameters">
-        <exec executable="cp" >
+        <exec executable="cp" failonerror="true">
             <arg path="app/config/parameters.ini.template" />
             <arg path="app/config/parameters.ini" />
         </exec>
