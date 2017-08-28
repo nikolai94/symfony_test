@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="name-of-project" default="build">
-    <target name="build" depends="prepare,parameters,lint,phploc,pdepend,phpmd-ci,phpcpd,phpdox,phpunit,phpcb"/>
+    <target name="build" depends="prepare,lint,phploc,pdepend,phpmd-ci,phpcpd,phpdox,phpunit,phpcb"/>
 
     <target name="build-parallel" depends="prepare,lint,tools-parallel,phpunit,phpcb"/>
 
@@ -116,11 +116,5 @@
             <arg path="${basedir}/app/build/code-browser" />
         </exec>
     </target>
-    
-    <target name="parameters" description="Copy parameters">
-        <exec executable="cp" failonerror="true">
-            <arg path="app/config/parameters.ini.template" />
-            <arg path="app/config/parameters.ini" />
-        </exec>
-    </target>
+
 </project>
