@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="name-of-project" default="build">
-    <target name="build" depends="prepare,lint,phpdox,phpunit,phpcb"/>
+    <target name="build" depends="prepare,lint,phpunit,phpcb"/>
 
     <target name="build-parallel" depends="prepare,lint,tools-parallel,phpunit,phpcb"/>
 
-    <target name="tools-parallel" description="Run tools in parallel">
-        <parallel threadCount="2">
-            <antcall target="phpdox"/>
-        </parallel>
-    </target>
 
     <target name="clean" description="Cleanup build artifacts">
         <delete dir="${basedir}/app/build/api"/>
@@ -22,7 +17,6 @@
         <mkdir dir="${basedir}/app/build/code-browser"/>
         <mkdir dir="${basedir}/app/build/coverage"/>
         <mkdir dir="${basedir}/app/build/logs"/>
-        <mkdir dir="${basedir}/app/build/phpdox"/>
     </target>
 
     <target name="lint" description="Perform syntax check of sourcecode files">
@@ -39,13 +33,6 @@
                 <modified />
             </fileset>
         </apply>
-    </target>
-
-    <target name="phpdox" description="Generate API documentation using phpDox">
-        <exec executable="phpdox">
-            <arg value="-f" />
-            <arg path="${basedir}/app/Resources/jenkins/phpdox.xml" />
-        </exec>
     </target>
 
     <target name="phpunit" description="Run unit tests with PHPUnit">
