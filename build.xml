@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="name-of-project" default="build">
-    <target name="build" depends="prepare,lint,phploc,pdepend,phpmd-ci,phpcpd,phpdox,phpunit,phpcb"/>
+    <target name="build" depends="prepare,lint,pdepend,phpmd-ci,phpcpd,phpdox,phpunit,phpcb"/>
 
     <target name="build-parallel" depends="prepare,lint,tools-parallel,phpunit,phpcb"/>
 
@@ -11,7 +11,6 @@
                 <antcall target="phpmd-ci"/>
             </sequential>
             <antcall target="phpcpd"/>
-            <antcall target="phploc"/>
             <antcall target="phpdox"/>
         </parallel>
     </target>
@@ -47,14 +46,6 @@
                 <modified />
             </fileset>
         </apply>
-    </target>
-
-    <target name="phploc" description="Measure project size using PHPLOC">
-        <exec executable="phploc">
-            <arg value="--log-csv" />
-            <arg value="${basedir}/app/build/logs/phploc.csv" />
-            <arg path="${basedir}/src" />
-        </exec>
     </target>
 
     <target name="pdepend" description="Calculate software metrics using PHP_Depend">
