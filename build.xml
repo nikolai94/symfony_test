@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="name-of-project" default="build">
-    <target name="build" depends="prepare,lint,phpunit,phpcb"/>
+    <target name="build" depends="prepare,lint,phpunit"/>
 
-    <target name="build-parallel" depends="prepare,lint,phpunit,phpcb"/>
+    <target name="build-parallel" depends="prepare,lint,phpunit"/>
 
     <target name="clean" description="Cleanup build artifacts">
         <delete dir="${basedir}/app/build/api"/>
@@ -33,23 +33,11 @@
             </fileset>
         </apply>
     </target>
-    
+
     <target name="phpunit" description="Run unit tests with PHPUnit">
         <exec executable="phpunit" failonerror="true">
             <arg value="-c" />
             <arg path="${basedir}/app/phpunit.xml" />
         </exec>
     </target>
-
-    <target name="phpcb" description="Aggregate tool output with PHP_CodeBrowser">
-        <exec executable="phpcb">
-            <arg value="--log" />
-            <arg path="${basedir}/app/build/logs" />
-            <arg value="--source" />
-            <arg path="${basedir}/src" />
-            <arg value="--output" />
-            <arg path="${basedir}/app/build/code-browser" />
-        </exec>
-    </target>
-
 </project>
